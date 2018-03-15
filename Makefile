@@ -1,6 +1,12 @@
 LOCAL_IMAGE ?= openshift-spark
 SPARK_IMAGE=mattf/openshift-spark
 DOCKERFILE_CONTEXT=openshift-spark-build
+DOCKER_BUILD_ARGS=
+
+# If you're behind a proxy, DOCKER_BUILD_ARGS will look
+# something like this
+
+#DOCKER_BUILD_ARGS="--build-arg HTTPPROXY=http://<proxy>:<port> --build-arg HTTPSPROXY=http://<proxy>:<port> --build-arg NOPROXY=http://<NoProxy>"
 
 # If you're pushing to an integrated registry
 # in Openshift, SPARK_IMAGE will look something like this
@@ -13,7 +19,7 @@ export OPENSHIFT_SPARK_TEST_IMAGE
 .PHONY: build clean push create destroy test-e2e
 
 build: $(DOCKERFILE_CONTEXT)
-	docker build -t $(LOCAL_IMAGE) $(DOCKERFILE_CONTEXT)
+	docker build -t $(LOCAL_IMAGE) $(DOCKERFILE_CONTEXT) ${DOCKER_BUILD_ARGS}
 
 clean: clean-context
 	-docker rmi $(LOCAL_IMAGE)
