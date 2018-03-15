@@ -18,12 +18,19 @@
 
 FROM centos:latest
 
+#Arguments to retrieve HTTP(S) Proxy from command line
+ARG HTTPPROXY
+ARG HTTPSPROXY
+ARG NOPROXY
+
 # Environment variables
 ENV JBOSS_IMAGE_NAME="radanalyticsio/openshift-spark" \
     JBOSS_IMAGE_VERSION="2.2-latest" \
     PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/spark/bin" \
-    SPARK_HOME="/opt/spark" 
-
+    SPARK_HOME="/opt/spark" \
+    http_proxy=${HTTPPROXY:-} \
+    https_proxy=${HTTPSPROXY:-} \
+    no_proxy=${NOPROXY:-}
 # Labels
 LABEL name="$JBOSS_IMAGE_NAME" \
       version="$JBOSS_IMAGE_VERSION" \
