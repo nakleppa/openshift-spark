@@ -70,7 +70,8 @@ RUN rm -rf /tmp/scripts
 USER root
 RUN rm -rf /tmp/artifacts
 
-USER 185
+# Being root is a bad practice, but I am doing it anyway.
+#USER 185
 
 # Specify the working directory
 WORKDIR /tmp
